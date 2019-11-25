@@ -244,7 +244,8 @@ agregamos a home una plantilla de presentacion de nuestra app
 ![captura de androides](instrumentos.png)
 
 
-
+-------------------------------------------------------------------------------------------------------------------------
+EN CONSTRUCCION
 
 # DETALLES
 
