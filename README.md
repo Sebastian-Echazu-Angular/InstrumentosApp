@@ -242,6 +242,7 @@ agregamos a home una plantilla de presentacion de nuestra app
 ![captura de home](home.png)
 ## Instrumentos
 ![captura de instrumentos](instrumentos.png)
+
 -------------------------------------------------------------------------------------------------------------------------
 
 # INCORPORACION DE DETALLE
