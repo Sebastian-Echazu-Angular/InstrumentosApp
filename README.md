@@ -152,7 +152,7 @@ export class InstrumentosService {
   }
 }
 ```
-## 15 - Tarjeta
+## 15 - Vista del componente Instrumentos
 En el html de intrumentos.html agregamos la tarjeta que por intermedio de un @ngfor utilizaremos para mostrar el conjunto de datos
 ```html
 <h1>Lista de Instrumentos</h1>
@@ -167,7 +167,7 @@ En el html de intrumentos.html agregamos la tarjeta que por intermedio de un @ng
 </div>
 
 ```
-## 16 - Logica de la información
+## 16 - Logica del componente Instrumentos
 en el archivo instrumentos.component.ts agregaremos el codigo nesesario y una inyeccion del servicio que nos proveera de los datos y metodos para ser mostrados
 ```typescript
 import { Component, OnInit } from '@angular/core';
