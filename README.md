@@ -236,9 +236,11 @@ agregamos a home una plantilla de presentacion de nuestra app
 ## 19 - Imagen de navbar
  agregamos a la carpeta assets/img el archivo angular.png
 
+# CAPTURAS
+
 ## Home
 ![captura de home](home.png)
-## Androides
+## Instrumentos
 ![captura de androides](instrumentos.png)
 
 
