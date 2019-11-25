@@ -242,97 +242,98 @@ agregamos a home una plantilla de presentacion de nuestra app
 ![captura de home](home.png)
 ## Instrumentos
 ![captura de androides](instrumentos.png)
-
-
 -------------------------------------------------------------------------------------------------------------------------
-EN CONSTRUCCION
 
-# DETALLES
+# INCORPORACION DE DETALLE
 
-<button (click)="verEquipo(equipoAux.id)" type="button" class="btn btn-outline-primary btn-block">Ver Mas</button>
-
-## 21 - Componente de detalles
-agregamos un componente de detalles para poder detallar cada persona
+## 21 - Creamos el componente de detalles
+agregamos un componente de detalles para poder detallar cada instrumento
 ```bash
-ng g c components/androide --spec false
+ng g c components/detalle --spec false
+```
+## 22 - Boton Ver Detalle en Componente instrumentos
+agregamos en boton de "ver Detalle" a la tarjeta de los instrumentos para que nos conecte con el componente de detalle de cada instrumento
+```html
+<button (click)="DetalleInstrumento(instrumentoAux.marca)" type="button"class="btn btn-outline-primary btn-block">Ver Detalle
+</button>
+```
+## 23 - Metodo en service
+agregamos al service el metodo que nos retorna un solo isntrumento de la lista
+```typescript
+// Busca instrumentos por marca
+  public getInstrumentoXMarca(marcaParam: string) {
+    for (const inst of this.instrumentos) {
+      if (inst.marca === marcaParam) {
+        console.log('ENCONTRE ' + inst.instrumento);
+        return inst;
+      }
+    }
+  }
 ```
 ## 22 - Routing de detalles
 agregamos al archivo de routing la pagina de detalles
 ```typescript
 //importamos el componente persona
-import { AndroideComponent } from './components/androide/androide.component';
-//componente de persona asociado a un id
-{ path: 'androide/:id',component:AndroideComponent},
+import { InstrumentoComponent } from './components/instrumento/instrumento.component';
+//componente de instrumento asociado a una marca
+{ path: 'instrumento/:marca',component:instrumentoComponent},
 ```
-## 23 Vista del componente Persona
-agregamos el siguinte codigo a la pagina de androide .
+## 23 - Componente de instrumento
+agregamos el siguiente codigo a la pagina de instrumento .
 ``` html
-<h1>Detalle de Androide </h1>
+<h1>Detalle del instrumento</h1>
 <hr>
 <div class="row">
     <div class="col-md-4" style="text-align: center">
-        <img [src]="androide.avatar" class="img-fluid" [alt]="androide.nombre"> <br><br>
-        <a [routerLink]="['/androides']" class="btn btn-outline-danger btn-block">Regresar</a> </div>
+        <img src="{{instrumento.imagen}}" class="img-fluid" [alt]="instrumento.instrumento"> <br><br>
+        <a [routerLink]="['/instrumentos']" class="btn btn-outline-danger btn-block">Regresar</a> </div>
     <div class="col-md-8">
-        <h3 style="color: crimson">{{androide.nombre}}</h3>
-        <h3 style="color: blue;"> {{androide.apellido | uppercase}}</h3>
+        <h3 style="color: crimson">{{instrumento.marca}}</h3>
+        <h3 style="color: blue;"> {{instrumento.modelo | uppercase}}</h3>
         <hr>
-        <p><b>Fabricacion:</b> {{androide.fechaFabricacion}}</p>
-        <div> <img *ngIf="androide.amigo" src="assets/img/amistad.png" alt="Amistad"> </div>
+        <p><b>Descripcion:</b>{{instrumento.descripcion}}</p>
+        <p><b>Precio:</b> {{instrumento.precio}}</p>
+        <div> <img *ngIf="instrumento.envio" src="assets/img/camion" alt="camion"> </div>
     </div>
 </div>
 ```
-## 24 - Imagen Amistad
-Agregamos a la carpeta assets/img el archivo amistad.png
 
-## 25 - Logica de persona
-Agrego al archivo personas.service.ts el metodo para mostrar equipo por id
-``` typescript
-public getAndroideXId(idx: number): Androide {
-    for (let androide of this.androides) {
-      if (androide.id == idx) {
-        return androide;
-      }
-    }
-  }
-```
-## 26 - Componente Androides
-
+## 24 - Componente Instrumentos
 agregamos el metodo al componente de detalle para habilitar el boton de mostrar el quipo
 ``` typescript
-public verPersona(idx: number) {
-    this.router.navigate(['/persona', idx])
-  }
+public DetalleInstrumento(ins:string){ this.router.navigate(['/instrumento', ins]) }
 ```
-## 27 - Logica Componente Androide
 
-eliminamos el metodo oninit y instanciamos a nuestro service para obtener una persona
+## 25 - Logica Componente Instrumento
+eliminamos el metodo oninit y instanciamos a nuestro service para obtener una instrumento
 ``` typescript
 import { Component, OnInit } from '@angular/core';
-import { Androide } from 'src/app/interface/androide';
 import { ActivatedRoute } from '@angular/router';
-import { AndroidesService } from 'src/app/service/androides.service';
+import { InstrumentosService } from 'src/app/service/instrumentos.service';
+import { Instrumento } from 'src/app/interface/instrumento';
 
 @Component({
-  selector: 'app-androide',
-  templateUrl: './androide.component.html',
-  styleUrls: ['./androide.component.css']
+  selector: 'app-instrumento',
+  templateUrl: './instrumento.component.html',
+  styleUrls: ['./instrumento.component.css']
 })
-export class AndroideComponent {
+export class InstrumentoComponent {
 
-  androide: Androide;
+  instrumento: Instrumento;
 
-  constructor(private activatedRouted: ActivatedRoute, private _androidesService: AndroidesService) {
-    this.activatedRouted.params.subscribe(params => {
-      console.log(params['id'])
-      this.androide = this._androidesService.getAndroideXId(params['id'])
+  constructor(private activatedroute: ActivatedRoute, private _instrumentoService: InstrumentosService) {
+    this.activatedroute.params.subscribe(params => {
+      console.log(params['marca'])
+      this.instrumento = _instrumentoService.getInstrumentoXMarca(params['marca']);
     })
   }
 }
 ```
-# Pagina de Androide
-![captura de androide](androide.png)
+# Captura
+![captura de androide](instrumento.png)
+-------------------------------------------------------------------------------------------------------------------------
 
+# BUSCADOR
 ## 29 - Componente buscador
 agregamos el componente buscador
 ``` bash

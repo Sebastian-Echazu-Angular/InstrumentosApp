@@ -11,10 +11,12 @@ import { Instrumento } from 'src/app/interface/instrumento';
 export class InstrumentosComponent implements OnInit {
 
   instrumentos : Instrumento[] = [];
-  constructor(private _intrumentosService: InstrumentosService, private routed: Router) { }
+  constructor(private _intrumentosService: InstrumentosService, private router: Router) { }
 
   ngOnInit() {
      this._intrumentosService.getInstrumentosFromPhp().subscribe(res =>{this.instrumentos = res});
   }
+  
+  public DetalleInstrumento(ins:string){ this.router.navigate(['/instrumento', ins]) }
   
 }

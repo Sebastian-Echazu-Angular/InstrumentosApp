@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 export class InstrumentosService {
 
   private instrumentos: Instrumento[] = [];
+  private instrumento: Instrumento;
 
   // Inyecta el HttpClient cuando se instancia el servicio
   constructor(private http: HttpClient) { }
@@ -23,5 +24,15 @@ export class InstrumentosService {
         console.log(this.instrumentos);
         return this.instrumentos;
       }));
+  }
+  // Busca instrumentos por marca
+  public getInstrumentoXMarca(marcaParam: string) {
+    console.log('getInstrumentoXMarca');
+    for (const inst of this.instrumentos) {
+      if (inst.marca === marcaParam) {
+        console.log('ENCONTRE ' + inst.instrumento);
+        return inst;
+      }
+    }
   }
 }

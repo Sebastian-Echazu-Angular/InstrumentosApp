@@ -8,13 +8,15 @@ import { InstrumentosComponent } from './component/instrumentos/instrumentos.com
 import { NavbarComponent } from './component/shared/navbar/navbar.component';
 import { InstrumentosService } from './service/instrumentos.service';
 import { HttpClientModule } from '@angular/common/http';
+import { InstrumentoComponent } from './component/instrumento/instrumento.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     InstrumentosComponent,
-    NavbarComponent
+    NavbarComponent,
+    InstrumentoComponent
   ],
   imports: [
     BrowserModule,

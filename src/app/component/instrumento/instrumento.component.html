@@ -1,0 +1,15 @@
+<h1>Detalle del instrumento</h1>
+<hr>
+<div class="row">
+    <div class="col-md-4" style="text-align: center">
+        <img src="{{instrumento.imagen}}" class="img-fluid" [alt]="instrumento.instrumento"> <br><br>
+        <a [routerLink]="['/instrumentos']" class="btn btn-outline-danger btn-block">Regresar</a> </div>
+    <div class="col-md-8">
+        <h3 style="color: crimson">{{instrumento.marca}}</h3>
+        <h3 style="color: blue;"> {{instrumento.modelo | uppercase}}</h3>
+        <hr>
+        <p><b>Descripcion:</b>{{instrumento.descripcion}}</p>
+        <p><b>Precio:</b> {{instrumento.precio}}</p>
+        <div> <img *ngIf="instrumento.envio" src="assets/img/camion" alt="camion"> </div>
+    </div>
+</div>
