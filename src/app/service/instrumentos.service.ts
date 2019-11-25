@@ -25,7 +25,7 @@ export class InstrumentosService {
         return this.instrumentos;
       }));
   }
-  // Busca instrumentos por marca
+  // muestra el detalle de cada instrumento seleccionado
   public getInstrumentoXMarca(marcaParam: string) {
     console.log('getInstrumentoXMarca');
     for (const inst of this.instrumentos) {
@@ -34,5 +34,17 @@ export class InstrumentosService {
         return inst;
       }
     }
+  }
+  //buscar instrumentos por el nombre
+  public buscarInstrumentos(termino: string):Instrumento[] {
+    let instrumentoArr: Instrumento[] = [];
+    termino = termino.toLowerCase();
+    for(let instrumento of this.instrumentos){
+      let ins = instrumento.instrumento.toLowerCase();
+      if (ins.indexOf(termino) >= 0) {
+        instrumentoArr.push(instrumento);
+      }
+    }
+   return instrumentoArr;
   }
 }

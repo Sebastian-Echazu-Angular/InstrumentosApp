@@ -3,8 +3,7 @@
     <div class="card animated fadeIn fast" *ngFor="let instrumentoAux of instrumentos; let i = index">
         <img class="card-img-top" src="{{instrumentoAux.imagen}}" [alt]="equipoAux">
         <div class="card-body">
-            <h5 class="card-title">Marca: {{instrumentoAux.marca}}</h5>
-            <p class="card-text">Modelo: {{instrumentoAux.modelo}}</p>
+            <h5 class="card-title">{{instrumentoAux.instrumento}}</h5>
         </div>
         <button (click)="DetalleInstrumento(instrumentoAux.marca)" type="button"
             class="btn btn-outline-primary btn-block">Ver Detalle</button>

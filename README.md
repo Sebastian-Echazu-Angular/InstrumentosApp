@@ -160,8 +160,7 @@ En el html de intrumentos.html agregamos la tarjeta que por intermedio de un @ng
     <div class="card animated fadeIn fast" *ngFor="let instrumentoAux of instrumentos; let i = index">
         <img class="card-img-top" src="{{instrumentoAux.imagen}}" [alt]="equipoAux">
         <div class="card-body">
-            <h5 class="card-title">Marca: {{instrumentoAux.marca}}</h5>
-            <p class="card-text">Modelo: {{instrumentoAux.modelo}}</p>
+            <h5 class="card-title">{{instrumentoAux.instrumento}}</h5>
         </div>
     </div>
 </div>
@@ -255,7 +254,8 @@ ng g c components/detalle --spec false
 ## 22 - Boton Ver Detalle en Componente instrumentos
 agregamos en boton de "ver Detalle" a la tarjeta de los instrumentos para que nos conecte con el componente de detalle de cada instrumento
 ```html
-<button (click)="DetalleInstrumento(instrumentoAux.marca)" type="button"class="btn btn-outline-primary btn-block">Ver Detalle
+<button (click)="DetalleInstrumento(instrumentoAux.marca)" 
+type="button"class="btn btn-outline-primary btn-block">Ver Detalle
 </button>
 ```
 ## 23 - Metodo en service
@@ -332,41 +332,47 @@ export class InstrumentoComponent {
 ```
 # Captura
 ![captura de androide](instrumento.png)
--------------------------------------------------------------------------------------------------------------------------
 
+-------------------------------------------------------------------------------------------------------------------------
 # BUSCADOR
-## 29 - Componente buscador
+## 26 - Componente buscador
 agregamos el componente buscador
 ``` bash
-ng g c components/buscador --spec false
+ng g c component/buscador --spec false
 ```
-## agregamos al menu el boton de buscar
-
- <form class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2" type="text" placeholder="Buscar Androide" #buscarTexto> <button (click) = "buscarAndroides(buscarTexto.value)" class="btn btn-outline-success my-2 my-sm-0" type="button">Buscar</button> 
-        </form>
-
-## 30 - Modificar Service
+## 27 - Boton buscar
+agregamos a navbar el codigo html para buscar
+```html
+ <form class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2"
+    type="text" placeholder="Buscar Instrumento" #buscarTexto>
+    <button (click) = "buscarAndroides(buscarTexto.value)" class="btn btn-outline-success my-2 my-sm-0" 
+    type="button">Buscar
+    </button> 
+ </form>
+```
+## 28 - Modificar Service
 Agregamos el metodo en service para que el componente pueda recibir un termino y asociarlo a un elemento de la coleccion
 ```typescript
-public buscarAndroide(termino: string):Androide[] {
-    let androideArr: Androide[] = [];
+ //buscar instrumentos por el nombre
+  public buscarInstrumentos(termino: string):Instrumento[] {
+    let instrumentoArr: Instrumento[] = [];
     termino = termino.toLowerCase();
-    for(let androide of this.androides){
-      let apellido = androide.apellido.toLowerCase();
-      if (apellido.indexOf(termino) >= 0) {
-        androideArr.push(androide);
+    for(let instrumento of this.instrumentos){
+      let ins = instrumento.instrumento.toLowerCase();
+      if (ins.indexOf(termino) >= 0) {
+        instrumentoArr.push(instrumento);
       }
     }
-   return androideArr;
+   return instrumentoArr;
   }
 ```
-## 31 - Logica de Buscador
+## 29 - Logica de Buscador
 agregamos el codigo para que podamos asociar al elemento buscador una logica
 ```typescript
 import { Component, OnInit } from '@angular/core';
-import { Androide } from 'src/app/interface/androide';
+import { Instrumento } from 'src/app/interface/instrumento';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AndroidesService } from 'src/app/service/androides.service';
+import { InstrumentosService } from 'src/app/service/instrumentos.service';
 
 @Component({
   selector: 'app-buscador',
@@ -375,39 +381,39 @@ import { AndroidesService } from 'src/app/service/androides.service';
 })
 export class BuscadorComponent implements OnInit {
 
-  androides: Androide[] = [];
+  instrumentos : Instrumento[]=[];
   termino : string;
 
-  constructor(private activatedRoute:ActivatedRoute, private _androidesService:AndroidesService,private router:Router) { }
+  constructor(private activatedRoute:ActivatedRoute,private router:Router,private _instrumentoService:InstrumentosService) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params=>{
+    this.activatedRoute.params.subscribe(params =>{
       this.termino = params['termino'];
-      this.androides = this._androidesService.buscarAndroide(params['termino']);
-    });
+      this.instrumentos = this._instrumentoService.buscarInstrumentos(params['termino']);
+    })
   }
-  public verAndroide(idx:number){ this.router.navigate(['/androide', idx]) }
 
+  public verInstrumento(ins:string){ this.router.navigate(['/instrumento', ins]) }
 }
 ```
-## - 32 Vista de Buscador
-agregamos el codigo logico del buscador
-``` typescript
+## - 30 Vista de Buscador
+agregamos el codigo a la vista del buscador
+``` html
 <h1>Buscando: {{termino}} </h1>
 <hr>
-<div class="row" *ngIf="androides.length == 0">
+<div class="row" *ngIf="instrumentos.length == 0">
     <div class="col-md-12">
         <div class="alert alert-info" role="alert"> No existen resultados con el termino: {{termino}} </div>
     </div>
 </div>
 <div class="card-columns">
-    <div class="card animated fadeIn fast" *ngFor="let androideAux of androides; let i = index">
-        <img class="card-img-top" src="{{androideAux.avatar}}" [alt]="androideAux">
+    <div class="card animated fadeIn fast" *ngFor="let instrumentoAux of instrumentos; let i = index">
+        <img class="card-img-top" src="{{intrumentoAux.imagen}}" [alt]="instrumentoAux">
         <div class="card-body">
-            <h5 class="card-title">{{androideAux.nombre}}</h5>
-            <p class="card-text">{{androideAux.apellido}}</p>
-            <p class="card-text"> <small class="text-muted">{{androideAux.fechaFabricacion}}</small> </p>
-            <button (click)="verAndroide(androideAux.id)" type="button" class="btn btn-outline-primary btn-block">Ver Mas</button>
+            <h5 class="card-title">{{instrumentoAux.marca}}</h5>
+            <p class="card-text">{{instrumentoAux.modelo}}</p>
+            <p class="card-text"> <small class="text-muted">{{instrumentoAux.precio}}</small> </p>
+            <button (click)="verInstrumento(instrumentoAux.instrumento)" type="button" class="btn btn-outline-primary btn-block">Ver Mas</button>
         </div>
     </div>
 </div>
@@ -434,7 +440,7 @@ export class NavbarComponent {
 
   constructor(private router: Router) { }
 
-  buscarAndroides(textoBusqueda: string) {
+  buscarInstrumentos(textoBusqueda: string) {
     this.router.navigate(['/buscar', textoBusqueda]);
   }
 }

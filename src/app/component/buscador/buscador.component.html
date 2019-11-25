@@ -1,0 +1,18 @@
+<h1>Buscando: {{termino}} </h1>
+<hr>
+<div class="row" *ngIf="instrumentos.length == 0">
+    <div class="col-md-12">
+        <div class="alert alert-info" role="alert"> No existen resultados con el termino: {{termino}} </div>
+    </div>
+</div>
+<div class="card-columns">
+    <div class="card animated fadeIn fast" *ngFor="let instrumentoAux of instrumentos; let i = index">
+        <img class="card-img-top" src="{{instrumentoAux.imagen}}" [alt]="instrumentoAux">
+        <div class="card-body">
+            <h5 class="card-title">{{instrumentoAux.instrumento}}</h5>
+            <p class="card-text">{{instrumentoAux.marca}}</p>
+            <p class="card-text"> <small class="text-muted">{{instrumentoAux.precio}}</small> </p>
+            <button (click)="verInstrumento(instrumentoAux.instrumento)" type="button" class="btn btn-outline-primary btn-block">Ver Mas</button>
+        </div>
+    </div>
+</div>

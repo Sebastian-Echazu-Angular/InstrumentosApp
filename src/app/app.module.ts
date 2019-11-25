@@ -9,6 +9,7 @@ import { NavbarComponent } from './component/shared/navbar/navbar.component';
 import { InstrumentosService } from './service/instrumentos.service';
 import { HttpClientModule } from '@angular/common/http';
 import { InstrumentoComponent } from './component/instrumento/instrumento.component';
+import { BuscadorComponent } from './component/buscador/buscador.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { InstrumentoComponent } from './component/instrumento/instrumento.compon
     HomeComponent,
     InstrumentosComponent,
     NavbarComponent,
-    InstrumentoComponent
+    InstrumentoComponent,
+    BuscadorComponent
   ],
   imports: [
     BrowserModule,
