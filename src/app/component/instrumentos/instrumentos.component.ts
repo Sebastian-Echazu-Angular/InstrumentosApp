@@ -14,7 +14,7 @@ export class InstrumentosComponent implements OnInit {
   constructor(private _intrumentosService: InstrumentosService, private routed: Router) { }
 
   ngOnInit() {
-    this.instrumentos = this._intrumentosService.getInstrumentosFromPhp();
+     this._intrumentosService.getInstrumentosFromPhp().subscribe(res =>{this.instrumentos = res});
   }
-
+  
 }

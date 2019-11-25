@@ -13,15 +13,15 @@ export class InstrumentosService {
   private instrumentos: Instrumento[] = [];
 
   // Inyecta el HttpClient cuando se instancia el servicio
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  public getInstrumentosFromPhp(){
+  public getInstrumentosFromPhp() {
     console.log('getInstrumentosFromPhp');
-    return this.http.get('http//localhost/proyectos/lista_intrumentos.php')
-      .pipe(map((InstrumentosServe)=>{
-        this.instrumentos = JSON.parse(JSON.stringify(InstrumentosServe));
+    return this.http.get('http://localhost/proyectos/lista_instrumentos.php')
+      .pipe(map((InstrumentosServer) => {
+        this.instrumentos = JSON.parse(JSON.stringify(InstrumentosServer));
         console.log(this.instrumentos);
         return this.instrumentos;
-      }))
+      }));
   }
 }

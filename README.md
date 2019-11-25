@@ -118,8 +118,8 @@ creamos un servicio para poder utilizarlo en nuestro proyecto
 ```bash
 ng g s service/intrumentos --spec false
 ```
-## 13 - Servicios
-copiamos el archivo lista_intrumentos.php en "C:\xampp\htdocs\proyectos" para que podamos acceder a los datos de este archivo
+## 13 - Assets
+copiamos el archivo lista_intrumentos.php en "C:\xampp\htdocs\proyectos" para que podamos acceder a los datos de este archivo y copiamos en la carpeta assets las imagenes del proyecto
 
 ## 14 - Datos de la app
 agregamos al servicio el metodo para obtener del archivo de php la lista de instrumentos
@@ -152,36 +152,45 @@ export class InstrumentosService {
   }
 }
 ```
-## 15 - Logica de la información
+## 15 - Tarjeta
+En el html de intrumentos.html agregamos la tarjeta que por intermedio de un @ngfor utilizaremos para mostrar el conjunto de datos
+```html
+<h1>Lista de Instrumentos</h1>
+<div class="card-columns">
+    <div class="card animated fadeIn fast" *ngFor="let instrumentoAux of instrumentos; let i = index">
+        <img class="card-img-top" src="{{instrumentoAux.imagen}}" [alt]="equipoAux">
+        <div class="card-body">
+            <h5 class="card-title">Marca: {{instrumentoAux.marca}}</h5>
+            <p class="card-text">Modelo: {{instrumentoAux.modelo}}</p>
+        </div>
+    </div>
+</div>
+
+```
+## 16 - Logica de la información
 en el archivo instrumentos.component.ts agregaremos el codigo nesesario y una inyeccion del servicio que nos proveera de los datos y metodos para ser mostrados
 ```typescript
 import { Component, OnInit } from '@angular/core';
-import { AndroidesService } from 'src/app/service/androides.service';
-
+import { InstrumentosService } from 'src/app/service/instrumentos.service';
 import { Router } from '@angular/router';
-import { Androide } from 'src/app/interface/androide';
+import { Instrumento } from 'src/app/interface/instrumento';
 
 @Component({
-  selector: 'app-androides',
-  templateUrl: './androides.component.html',
-  styleUrls: ['./androides.component.css']
+  selector: 'app-instrumentos',
+  templateUrl: './instrumentos.component.html',
+  styleUrls: ['./instrumentos.component.css']
 })
-export class AndroidesComponent implements OnInit {
+export class InstrumentosComponent implements OnInit {
 
-  androides: Androide[] = [];
-
-  constructor(private _androidesService:AndroidesService,private router:Router) { }
+  instrumentos : Instrumento[] = [];
+  constructor(private _intrumentosService: InstrumentosService, private routed: Router) { }
 
   ngOnInit() {
-    this.androides= this._androideService.getAndroides();
-    console.log(this.androides);
+     this._intrumentosService.getInstrumentosFromPhp().subscribe(res =>{this.instrumentos = res});
   }
-
-  public verAndroide(idx:string){ this.router.navigate(['/androide', idx]) }
-
 }
 ```
-## 16 - Servicios
+## 17 - Servicios
 agregamos a nuestro archivo app.module.ts el servicio
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
@@ -189,53 +198,55 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { AboutComponent } from './components/about/about.component';
-import { PersonasComponent } from './components/personas/personas.component';
-import { NavbarComponent } from './components/shared/navbar/navbar.component';
-//importamos el servicio 
-import { PersonasService } from './service/personas.service';
+import { HomeComponent } from './component/home/home.component';
+import { InstrumentosComponent } from './component/instrumentos/instrumentos.component';
+import { NavbarComponent } from './component/shared/navbar/navbar.component';
+import { InstrumentosService } from './service/instrumentos.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AboutComponent,
-    PersonasComponent,
+    InstrumentosComponent,
     NavbarComponent
   ],
   imports: [
     BrowserModule,
+    //agregamos esto para manejar las solicitudes http
+    HttpClientModule,
     AppRoutingModule
   ],
-  //Agregamos el servicio a providers
-  providers: [PersonasService],
+  providers: [InstrumentosService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 ```
 
-## 17 -  Home
+## 18 -  Home
 agregamos a home una plantilla de presentacion de nuestra app
 ```html
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h1 class="display-4">Lista de Androides</h1>
-        <p class="lead">Ejemplo de una app que muestra una lista de Androides</p>
+        <h1 class="display-4">App de Instrumentos</h1>
+        <p class="lead">Ejemplo de una app que muestra una lista de Instrumentos</p>
     </div>
 </div>
 ```
-## 20 - Imagen de navbar
+## 19 - Imagen de navbar
  agregamos a la carpeta assets/img el archivo angular.png
 
 ## Home
 ![captura de home](home.png)
 ## Androides
-![captura de androides](androides.png)
+![captura de androides](instrumentos.png)
+
+
+
 
 # DETALLES
 
-
+<button (click)="verEquipo(equipoAux.id)" type="button" class="btn btn-outline-primary btn-block">Ver Mas</button>
 
 ## 21 - Componente de detalles
 agregamos un componente de detalles para poder detallar cada persona

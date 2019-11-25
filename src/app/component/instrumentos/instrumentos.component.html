@@ -1,1 +1,10 @@
-<p>instrumentos works!</p>
+<h1>Lista de Instrumentos</h1>
+<div class="card-columns">
+    <div class="card animated fadeIn fast" *ngFor="let instrumentoAux of instrumentos; let i = index">
+        <img class="card-img-top" src="{{instrumentoAux.imagen}}" [alt]="equipoAux">
+        <div class="card-body">
+            <h5 class="card-title">Marca: {{instrumentoAux.marca}}</h5>
+            <p class="card-text">Modelo: {{instrumentoAux.modelo}}</p>
+        </div>
+    </div>
+</div>

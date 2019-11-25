@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './component/home/home.component';
 import { InstrumentosComponent } from './component/instrumentos/instrumentos.component';
 import { NavbarComponent } from './component/shared/navbar/navbar.component';
+import { InstrumentosService } from './service/instrumentos.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,9 +18,10 @@ import { NavbarComponent } from './component/shared/navbar/navbar.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [InstrumentosService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
