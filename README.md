@@ -445,6 +445,5 @@ export class NavbarComponent {
   }
 }
 ```
-# Captura del Componente de busqueda
-
+# Captura 
 ![captura de buscador](buscador.png)
