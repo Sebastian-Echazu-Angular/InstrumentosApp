@@ -393,7 +393,7 @@ export class BuscadorComponent implements OnInit {
     })
   }
 
-  public verInstrumento(ins:string){ this.router.navigate(['/instrumento', ins]) }
+  public DetalleInstrumento(ins:string){ this.router.navigate(['/instrumento', ins]) }
 }
 ```
 ## - 30 Vista de Buscador
@@ -412,8 +412,8 @@ agregamos el codigo a la vista del buscador
         <div class="card-body">
             <h5 class="card-title">{{instrumentoAux.marca}}</h5>
             <p class="card-text">{{instrumentoAux.modelo}}</p>
-            <p class="card-text"> <small class="text-muted">{{instrumentoAux.precio}}</small> </p>
-            <button (click)="verInstrumento(instrumentoAux.instrumento)" type="button" class="btn btn-outline-primary btn-block">Ver Mas</button>
+           <button (click)="DetalleInstrumento(instrumentoAux.marca)" type="button"
+            class="btn btn-outline-primary btn-block">Ver Detalle</button>
         </div>
     </div>
 </div>

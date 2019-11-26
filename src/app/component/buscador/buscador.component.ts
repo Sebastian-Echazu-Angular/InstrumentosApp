@@ -22,5 +22,5 @@ export class BuscadorComponent implements OnInit {
     })
   }
 
-  public verInstrumento(ins:string){ this.router.navigate(['/instrumento', ins]) }
+  public DetalleInstrumento(ins:string){ this.router.navigate(['/instrumento', ins]) }
 }
